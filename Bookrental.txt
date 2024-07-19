@@ -1,0 +1,135 @@
+void returnBook(Customer& customer, CustomerRent& rent) {
+			
+	int cID, bID;
+	
+	system("cls"); // Clear the console screen
+	cout << "Returning a Book\n";
+	cout << "Enter Customer ID: ";
+	cin >> cID;
+	if (bookID.empty()) {
+		// If there are no books in the library, print a message
+		cout << "Library is Empty.\n";
+	} else if (!rent.rentedbooks[cID].empty()) {
+		while (!rent.rentedbooks[cID].empty()) { // Check if the customer has any rented books
+			bID = rent.rentedbooks[cID].back();
+			rent.rentedbooks[cID].pop_back(); // Remove the book ID from the customer's rented books
+			bool found = false;
+			// Iterate through the list of book IDs to find the matching book
+			for (int i = 0; i < bookID.size(); i++) {
+				if (bID == bookID[i]) {
+					found = true;
+					if (nofCopies[i] < initialCopies[i]) { // If the current number of copies is less than the initial number of copies
+						nofCopies[i]++;
+						cout << "Book returned successfully.\n\n";
+					} else { // If the current number of copies is equal to the initial number of copies
+						cout << "All copies of this book are already returned.\n";
+					}
+					break; // Exit the loop once the book is found
+				}
+			}
+			if (!found) {
+				// If the book ID is not found, print a message
+				cout << "Book ID not found.\n";
+			}
+		}
+	} else {
+		// If the customer has no books to return, print a message
+		cout << "No Books to return.\n";
+	}
+	cout << endl;
+}
+
+void displayBooks() {
+    system ("cls"); // Clear the console screen
+    cout << "Books in the library:\n";
+    
+    if(bookID.empty()) {
+        // If there are no books in the library, print a message
+        cout << "Library is Empty.\n\n";
+    } else {
+        // Print the header for the book list
+        cout << "ID | Title | Author | Genre | Copies\n";
+        
+        // Iterate through the list of books and print their details
+        for(int i = 0; i < bookID.size(); i++) {
+            cout << bookID[i] << " | " << bookTitle[i] << " | " << author[i] << " | " << genre[i] << " | " << nofCopies[i] << endl;
+        }
+        cout << endl;
+    }
+}
+
+void showBookDetails() {
+    bool found = false; // Initialize a flag to track if the book is found
+
+    system("cls"); // Clear the console screen
+    cout << "Showing Book Details\n"; // Display a header for book details
+    if (bookID.empty()) {
+        // Check if the bookID vector is empty
+        cout << "Library is Empty.\n\n"; // If there are no books, print a message
+    } else {
+        cout << "Book ID:\t"; // Prompt the user to enter a Book ID
+        cin >> id; // Read the Book ID input from the user
+
+        // Iterate through the list of book IDs to find the matching book
+        for (int i = 0; i < bookID.size(); i++) {
+            // Check if the entered ID matches any book ID in the list
+            if (id == bookID[i]) {
+                found = true; // Set the found flag to true
+                system("cls"); // Clear the console screen again
+                cout << "Showing Book Details\n"; // Display header for showing book details
+                // Print the details of the found book
+                cout << "Book ID:\t\t" << bookID[i] << endl; // Display Book ID
+                cout << "Book Title:\t\t" << bookTitle[i] << endl; // Display Book Title
+                cout << "Author:\t\t\t" << author[i] << endl; // Display Author name
+                cout << "Genre:\t\t\t" << genre[i] << endl; // Display Genre of the book
+                cout << "Number of Copies:\t" << nofCopies[i] << endl << endl; // Display number of available copies
+                break; // Exit the loop once the book is found
+            }
+        }
+        if (!found) {
+            // If the book was not found in the list
+            cout << "Book not found.\n\n" << endl; // Print a message indicating the book was not found
+        }
+    }
+}
+
+
+
+void checkAvailability() {
+    bool found = false;
+    
+    system("cls"); // Clear the console screen
+    cout << "Showing Book Availability\n";
+    if (bookID.empty()) {
+        // If there are no books in the library, print a message
+        cout << "Library is Empty.\n\n";
+    } else {
+        cout << "Book ID:\t";
+        cin >> id;
+        
+        // Iterate through the list of book IDs to find the matching book
+        for (int i = 0; i < bookID.size(); i++) {
+            if (id == bookID[i]) {
+                found = true;
+                system("cls"); // Clear the console screen again
+                cout << "Showing Book Details\n";
+                cout << "Book ID:\t\t" << bookID[i] << endl;
+                cout << "Book Title:\t\t" << bookTitle[i] << endl;
+                cout << "Author:\t\t\t" << author[i] << endl;
+                cout << "Genre:\t\t\t" << genre[i] << endl;
+                cout << "Number of Copies:\t" << nofCopies[i] << endl;
+                cout << "Availability:\t\t";
+                if (nofCopies[i] == 0) {
+                    cout << "Unavailable\n\n";
+                } else {
+                    cout << "Available\n\n";
+                }
+                break; // Exit the loop once the book is found
+            }
+        }
+        if (!found) {
+            // If the book is not found, print a message
+            cout << "Book not found.\n\n" << endl;
+        }
+    }
+}
